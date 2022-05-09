@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style type="text/css">
+    /*禁用网页双击功能*/
+        body{
+            -moz-user-select:none; /*火狐*/             
+            -webkit-user-select:none; /*webkit浏览器*/             
+            -ms-user-select:none; /*IE10*/             
+            user-select:none;
+       
+        }
+        /*进度条*/
+        #d2{
+            width: 100px;
+            height: 20px;
+            border: 1px solid blue;
+            display: inline-block;
+        }
+        #d3{
+            background:coral;
+            display: inline-block;
+            height: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+    var fs=0//记录分数
+    var count=0;//记录马的数量
+    var zm=0;//真马的数量
+    var sj;//时间定时器名
+    var dsq;//定时器全局变量
+    var n=0;//记录游戏时间变量
+    a
+    function startGame(){
+        window.clearInterval(sj);
+        window.clearInterval(dsq);
+        sj=window.setInterval("jc()",1000);
+        dsq=window.setInterval("m()",400);
+    }
+    function m(){//随机马
+        //生成马
+        var sjm=document.createElement("img");
+        sjm.src="ma.png"
+        //随机大小
+        var w=Math.floor(Math.random()*80+20);
+        sjm.width=w;
+        //随机位置
+        var x=Math.floor(Math.random()*500+100);
+        var y=Math.floor(Math.random()*1100+100);
+        //绝对定位
+        sjm.style.position="absolute"
+        sjm.style.top=x+"px";
+        sjm.style.left=y+"px";
+        //数量加1
+        count++;
+        var kd=document.getElementById("d3");
+        kd.style.width=count*5+"px";//进度条加一
+        //游戏结束界面
+        if(count>20){
+            alert("游戏结束,宁杀了"+zm+"个🐴");
+            window.clearInterval(dsq);
+            location.reload();
+        }
+        //调用清除马
+        sjm.onclick=removeMA;
+        //判断胜利条件,胜利后输出flag
+        if(zm==100){window["\x61\x6c\x65\x72\x74"]('\u5b81\u6740\u5149\u4e86\u6240\u6709\u7684\ud83d\udc34\uff0c\u7ed9\u60a8\x66\x6c\x61\x67\x3a\x4a\x6c\x65\x6e\x75\x43\x54\x46\x7b\x59\x30\x75\x5f\x41\x72\x45\x5f\x48\x4f\x72\x73\x65\x5f\x6b\x69\x6c\x6c\x45\x52\x7d');window['\x63\x6c\x65\x61\x72\x49\x6e\x74\x65\x72\x76\x61\x6c'](dsq);location['\x72\x65\x6c\x6f\x61\x64']()}
+        document.body.appendChild(sjm);
+    }
+    function removeMA(){/*删除🐎的函数*/
+        this.parentNode.removeChild(this);
+        count--; 
+        fs+=100; //分数累计
+        var kms=document.getElementById("2");
+        kms.innerHTML="当前分数:"+fs;
+        var kd=document.getElementById("d3");
+        kd.style.width=count*5+"px";//杀马后减条
+        zm+=1;
+    }
+    function stop(){//点击暂停
+        alert("以停止")
+    }
+    //记录游戏时间函数
+    function jc(){
+        n++;
+        var jianchi=document.getElementById(1);
+        jianchi.innerHTML="宁坚持了"+n+"秒"
+        
+    }
+    function sm(){
+        alert("游戏说明：你现在化身龙，杀掉这些🐴，他们总共有一百只，如果超过20只就会杀掉你")
+    }
+    </script>
+    <title>杀🐴游戏</title>
+</head>
+<body>
+    <input type="button" value="开始游戏" onclick="startGame()">
+    <input type="button" value="游戏说明" onclick="sm()">
+    <input type="button" value="暂停游戏" onclick="stop()">
+    <span id="1">宁坚持了0秒</span>
+    <span id="d2"><span id="d3"></span></span>
+    <br>
+    <span id="2">当前分数:0</span>
+
+
+</body></html>
